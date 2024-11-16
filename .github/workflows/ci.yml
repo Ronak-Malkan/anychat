@@ -1,0 +1,36 @@
+name: Build Application
+
+on:
+  push:
+    branches:
+      - main
+      - "feature/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+
+      - name: Install Backend Dependencies
+        run: npm install
+        working-directory: ./
+
+      - name: Build Backend
+        run: npm run build
+        working-directory: ./
+
+      - name: Install Frontend Dependencies
+        run: npm install
+        working-directory: ./web
+
+      - name: Build Frontend
+        run: npm run build
+        working-directory: ./web
